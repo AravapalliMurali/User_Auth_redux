@@ -8,13 +8,14 @@ import App from './App'
 const store = configureStore()
 console.log(store.getState())
 
-//store.subscribe(()=>{
-//   console.log('update store', store.getState())
-// })
+store.subscribe(()=>{
+  console.log('update store', store.getState())
+})
 
 ReactDOM.render(<Provider store={store}>
   <BrowserRouter>
   <App/>
   </BrowserRouter>
   </Provider>
-  , document.getElementById('root'))
+  , document.getElementById('root')
+  )

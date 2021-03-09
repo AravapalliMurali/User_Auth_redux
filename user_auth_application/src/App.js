@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+
 
 const App =()=>{
   return (
     <div>
-      <h2>User-auth-application </h2>
+      <h1>User-auth-application </h1>
     </div>
   )
 }
