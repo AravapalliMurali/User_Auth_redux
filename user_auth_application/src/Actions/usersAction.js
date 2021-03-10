@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// registration form action creators 
 export function startGetData(formData){
     return(dispatch)=>{
         axios.post('http://dct-user-auth.herokuapp.com/users/register',formData)

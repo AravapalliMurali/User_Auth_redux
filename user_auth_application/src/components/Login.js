@@ -1,8 +1,7 @@
 import React,{useState} from 'react'
-import {useDispatch} from 'react-redux'
+import axios from 'axios'
 
 export default function Login(props){
-    const dispatch = useDispatch()
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
 
@@ -21,8 +20,19 @@ export default function Login(props){
             email : email,
             password : password
         }
-
-        dispatch()
+        axios.post('http://dct-user-auth.herokuapp.com/users/login', formData)
+            .then((response)=>{
+                const result  = response.data
+                if(Object.keys(result).includes('error')){
+                    alert(result.error)
+                } else {
+                    alert('successfully logged in ')
+                    // here we are storing the token in the local storage 
+                    localStorage.setItem('token',result.token)
+                    props.history.push('/')// redirecting to home component page 
+                    props.handleLogginedIn()
+                }
+            })
         
     }
 

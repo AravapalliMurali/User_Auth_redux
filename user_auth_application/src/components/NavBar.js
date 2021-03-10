@@ -6,7 +6,7 @@ import Login from './Login'
 import Notes from './Notes'
 import RegistrationForm from './RegistrationForm'
 
-const NavBar = ({loggedIn , handleLogginedIn })=>{
+const NavBar = ({loggedIn , handleLogginedIn , history })=>{
     return(
         <div>
             <ul>
@@ -15,7 +15,13 @@ const NavBar = ({loggedIn , handleLogginedIn })=>{
                     <React.Fragment>
                         <li><Link to ="/account">MyAccount</Link></li>
                         <li><Link to ="/myNotes">My_Notes</Link></li>
-                        <li><Link>Logout</Link></li>
+                        <li><Link onClick={()=>{
+                            //removing the token from the localstorage
+                            localStorage.removeItem('token')
+                            alert('you are successfully logged out ')
+                            handleLogginedIn()
+                            history.push('/')
+                        }}>Logout</Link></li>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
@@ -25,9 +31,11 @@ const NavBar = ({loggedIn , handleLogginedIn })=>{
                 )}
 
                 <Route path ='/' component ={Home} exact = {true}/>
-                <Route path ="/acount" component = {Account}/>
+                <Route path = "/account" component = {Account}/>
                 <Route path = "/myNotes"  component = {Notes}/>
-                <Route path = "/login" component = {Login}/>
+                <Route path = "/login" render ={(props)=>{
+                    return <Login {...props} handleLogginedIn = {handleLogginedIn}/>
+                }}/>
                 <Route path ="/register" component ={RegistrationForm}/>
             </ul>
         </div>
