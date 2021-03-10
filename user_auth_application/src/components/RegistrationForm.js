@@ -1,12 +1,16 @@
 import React,{useState } from 'react'
 import {useDispatch} from 'react-redux'
 import {startGetData} from '../Actions/usersAction'
+import validator from 'validator'
+
 
 export default function RegistrationForm(props){
     const dispatch = useDispatch()
     const [userName , setUserName] = useState('')
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
+    const [formError , setFormError] = useState({})
+    const error  = {}
 
     const handleInput =(e)=>{
         const input = e.target.name
@@ -19,31 +23,63 @@ export default function RegistrationForm(props){
         }
     }
 
-    const handleSubmit = (e) =>{
-        e.preventDefault()
-        const formData={
-            username : userName,
-            email : email,
-            password : password
+    const runValidation =()=>{
+        // for name
+        if(userName.trim().length === 0){
+            error.userName = "name cannot be blank"
+        }
+        // for email
+        if(email.trim().length === 0){
+            error.email = "email cannot be blank "
+        } else if( !(validator.isEmail(email))){
+            error.email = "invalid email format"
         }
 
-        dispatch(startGetData(formData))
+        // for password
+        if(password.trim().length === 0){
+            error.password = "password cannot be blank"
+        }
+    }
 
-        // reset form 
-        setUserName('')
-        setEmail('')
-        setPassword('')
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+
+        // form validation
+        runValidation()
+
+        if(Object.keys(error).length ===0 ){
+            setFormError({})
+            const formData={
+                username : userName,
+                email : email,
+                password : password
+            }
+    
+            dispatch(startGetData(formData))
+
+            // reset form 
+            
+            setUserName('')
+            setEmail('')
+            setPassword('')
+
+        } else{
+            setFormError(error)
+        }
     }
 
     return(
         <div>
             <h2>User Registration Form</h2>
             <form onSubmit ={handleSubmit}>
-                <input type = "text" placeholder = "userName" name = "name" value ={userName} onChange ={handleInput} /> <br/>
+                <input type = "text" placeholder = "userName" name = "name" value ={userName} onChange ={handleInput} /> 
+                {formError.userName  && <span>{formError.userName}</span>}<br/>
 
-                <input type = "email" placeholder ="email" name ="email" value ={email} onChange ={handleInput}/> <br/>
+                <input type = "text" placeholder ="email" name ="email" value ={email} onChange ={handleInput}/>
+                {formError.email  && <span>{formError.email}</span>}<br/>
 
-                <input type ="password" placeholder ="password" name ="password" value ={password} onChange ={handleInput}/> <br/>
+                <input type ="password" placeholder ="password" name ="password" value ={password} onChange ={handleInput}/> 
+                {formError.password  && <span>{formError.password}</span>}<br/>
 
                 <input type = 'submit' value ="submit"/>
             </form>

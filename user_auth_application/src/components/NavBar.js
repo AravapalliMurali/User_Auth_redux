@@ -15,13 +15,13 @@ const NavBar = ({loggedIn , handleLogginedIn , history })=>{
                     <React.Fragment>
                         <li><Link to ="/account">MyAccount</Link></li>
                         <li><Link to ="/myNotes">My_Notes</Link></li>
-                        <li><Link onClick={()=>{
+                        <li><Link to ='/' onClick={()=>{
                             //removing the token from the localstorage
                             localStorage.removeItem('token')
                             alert('you are successfully logged out ')
                             handleLogginedIn()
                             history.push('/')
-                        }}>Logout</Link></li>
+                        }}>Logout </Link></li>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>

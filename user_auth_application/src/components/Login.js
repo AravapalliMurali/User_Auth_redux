@@ -1,9 +1,12 @@
 import React,{useState} from 'react'
 import axios from 'axios'
+import validator from 'validator'
 
 export default function Login(props){
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
+    const [formError , setFormError] = useState({})
+    const error = {}
 
     const handleInput = (e)=>{
         const input  = e.target.name
@@ -13,9 +16,30 @@ export default function Login(props){
             setPassword(e.target.value)
         }
     }
+    const runValidation = ()=>{
+        if(email.trim().length === 0){
+            error.email = "email cannot be blank"
+        } else if(!(validator.isEmail(email))){
+            error.email =" invalid email format"
+        }
+
+        if(password.trim().length === 0){
+            error.password = 'password cannot be blank '
+        }
+    }
 
     const handleSubmit = (e)=>{
         e.preventDefault()
+
+        // to run validation
+
+        runValidation()
+
+        if(Object.keys(error).length === 0){
+            setFormError({})
+            
+        }
+
         const formData = {
             email : email,
             password : password
@@ -33,16 +57,21 @@ export default function Login(props){
                     props.handleLogginedIn()
                 }
             })
-        
+
+            //reset the from 
+            setEmail('')
+            setPassword('')
     }
 
     return (
         <div>
             <h2>Login Form</h2>
             <form onSubmit ={handleSubmit}>
-                <input type = "email" placeholder ="email" name ="email" value ={email} onChange ={handleInput}/> <br/>
+                <input type = "email" placeholder ="email" name ="email" value ={email} onChange ={handleInput}/>
+                {formError.email && <span>{formError.email}</span>} <br/>
 
-                <input type ="password" placeholder ="password" name ="password" value ={password} onChange ={handleInput}/> <br/>
+                <input type ="password" placeholder ="password" name ="password" value ={password} onChange ={handleInput}/> 
+                {formError.password && <span>{formError.password}</span>} <br/>
 
                 <input type = 'submit' value ="submit"/>
             </form>

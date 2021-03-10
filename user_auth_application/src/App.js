@@ -9,9 +9,8 @@ const App =()=>{
   }
 
   useEffect(()=>{
-    if(localStorage.getItem('token')){
+    if(localStorage.getItem('token'))
       handleLogginedIn()
-    }
   },[])
   
   return (
