@@ -1,7 +1,9 @@
-import React,{useState , useEffect} from 'react'
-//import {Link} from 'react-router-dom'
+import React,{useState } from 'react'
+import {useDispatch} from 'react-redux'
+import {startGetData} from '../Actions/usersAction'
 
 export default function RegistrationForm(props){
+    const dispatch = useDispatch()
     const [userName , setUserName] = useState('')
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
@@ -20,10 +22,17 @@ export default function RegistrationForm(props){
     const handleSubmit = (e) =>{
         e.preventDefault()
         const formData={
-            name : userName ,
-            email : email ,
+            username : userName,
+            email : email,
             password : password
         }
+
+        dispatch(startGetData(formData))
+
+        // reset form 
+        setUserName('')
+        setEmail('')
+        setPassword('')
     }
 
     return(
