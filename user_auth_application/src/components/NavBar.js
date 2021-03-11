@@ -5,8 +5,12 @@ import Home from './Home'
 import Login from './Login'
 import Notes from './Notes'
 import RegistrationForm from './RegistrationForm'
+import {useDispatch} from "react-redux"
+import {startClearStore} from '../Actions/usersAction'
+
 
 const NavBar = ({loggedIn , handleLogginedIn , history })=>{
+    const dispatch  = useDispatch()
     return(
         <div>
             <ul>
@@ -17,11 +21,12 @@ const NavBar = ({loggedIn , handleLogginedIn , history })=>{
                         <li><Link to ="/myNotes">My_Notes</Link></li>
                         <li><Link to ='/' onClick={()=>{
                             //removing the token from the localstorage
+                            dispatch(startClearStore())
                             localStorage.removeItem('token')
                             alert('you are successfully logged out ')
                             handleLogginedIn()
                             history.push('/')
-                        }}>Logout </Link></li>
+                        }}>Logout </Link> </li>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>

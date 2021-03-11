@@ -5,19 +5,25 @@ import { startGetUserInfo } from '../Actions/usersAction'
 export default function Account(){
     const dispatch = useDispatch()
     const data = useSelector((state)=>{
-        return state.FormData
+        return state.userINFO
     })
 
     useEffect(()=>{
         dispatch(startGetUserInfo())
     },[])
-
+    
     return (
         <div>
             <h2>User Account details </h2>
-             <h5> User Name : {data.username} </h5>
-             <h5> email : {data.email} </h5>
-            
+            {data.map((ele,i)=>{
+                return(
+                    <div key = {i}>
+                        <h5>User Name :{ele.username}</h5>
+                        <h5>User email :{ele.email}</h5>
+                    </div>
+                )
+            })}
+
         </div>
     )
 }
