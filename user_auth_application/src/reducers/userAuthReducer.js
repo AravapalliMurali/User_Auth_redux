@@ -5,9 +5,12 @@ export default function userAuthReducer(state = formInitaialValue , action){
           case "POST_DATA" : {
                return [...state , {...action.payload}]
           }
+          case "USER_INFO" : {
+               return state.find(ele=> ele._id === action.payload)
+          }
 
-        default :{
-             return [...state]
-        }
+          default :{
+               return [...state]
+          }
      }
 }

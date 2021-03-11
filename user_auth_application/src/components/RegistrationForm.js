@@ -56,6 +56,7 @@ export default function RegistrationForm(props){
             }
     
             dispatch(startGetData(formData))
+            props.history.push('/login')
 
             // reset form 
             

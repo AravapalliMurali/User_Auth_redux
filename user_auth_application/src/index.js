@@ -9,6 +9,7 @@ const store = configureStore()
 console.log(store.getState())
 
 store.subscribe(()=>{
+  localStorage.setItem("userDetails" , JSON.stringify(store.getState()))
   console.log('update store', store.getState())
 })
 

@@ -47,8 +47,8 @@ export default function Login(props){
         axios.post('http://dct-user-auth.herokuapp.com/users/login', formData)
             .then((response)=>{
                 const result  = response.data
-                if(Object.keys(result).includes('error')){
-                    alert(result.error)
+                if(Object.keys(result).includes('errors')){
+                    alert(result.errors)
                 } else {
                     alert('successfully logged in ')
                     // here we are storing the token in the local storage 
