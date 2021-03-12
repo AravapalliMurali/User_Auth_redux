@@ -24,7 +24,7 @@ const handleSubmit =(e)=>{
     }
 
     if(handleToggle){
-        dispatch(startGetEdit(formData , id ))
+        dispatch(startGetEdit(id , formData))
         handleToggle()
     } else {
         dispatch(startGetAddNotes(formData))

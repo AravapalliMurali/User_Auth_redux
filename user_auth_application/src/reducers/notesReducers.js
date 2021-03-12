@@ -15,7 +15,13 @@ export default function notesReducers( state = notesInitialvalue , action ){
             return state.filter(ele=>ele._id !== action.payload)
         }
         case "EDIT" : {
-            return [...state , {...action.payload}]
+            return state.map(ele =>{
+                if(ele._id === action.payload._id){
+                    return {...ele , ...action.payload}
+                } else {
+                    return {...ele}
+                }
+            })
         }
 
         default : {

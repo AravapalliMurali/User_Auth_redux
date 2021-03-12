@@ -162,6 +162,7 @@ export const startGetEdit=(id ,formData)=>{
         .then((response)=>{
             const result = response.data
             swal(`${result.title} notes is successfully updated`)
+            //console.log('edit_data',result)
             dispatch(editNotes(result))
         })
     }
