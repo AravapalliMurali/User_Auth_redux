@@ -48,20 +48,15 @@ export function startGetUserInfo(id){
     }
 }
 
-export function getUser(id){
+export function getUser(data){
     return {
         type : "USER_INFO",
-        payload : id
+        payload : data
     }
 }
 
 // clearing the store of userInfo
 
-export const startClearStore=()=>{
-    return (dispatch)=>{
-        dispatch(clearStore())
-    }
-}
 
 export const clearStore=()=>{
     return {

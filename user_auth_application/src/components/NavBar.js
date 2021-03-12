@@ -6,7 +6,7 @@ import Login from './Login'
 import Notes from './notes application /Notes'
 import RegistrationForm from './RegistrationForm'
 import {useDispatch} from "react-redux"
-import {startClearStore} from '../Actions/usersAction'
+import {clearStore} from '../Actions/usersAction'
 
 
 const NavBar = ({loggedIn , handleLogginedIn , history })=>{
@@ -21,7 +21,7 @@ const NavBar = ({loggedIn , handleLogginedIn , history })=>{
                         <li><Link to ="/myNotes">My_Notes</Link></li>
                         <li><Link to ='/' onClick={()=>{
                             //removing the token from the localstorage
-                            dispatch(startClearStore())
+                            dispatch(clearStore())
                             localStorage.removeItem('token')
                             alert('you are successfully logged out ')
                             handleLogginedIn()
