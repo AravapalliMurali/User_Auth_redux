@@ -67,3 +67,60 @@ export const clearStore=()=>{
         type : "CLEAR"
     }
 }
+
+// adding notes action creator 
+export const startGetAddNotes= (formData) =>{
+    return (dispatch)=>{
+
+        axios.post('http://dct-user-auth.herokuapp.com/api/notes',formData ,{
+            headers :{
+                "x-auth" : localStorage.getItem('token')
+            }
+        })
+        .then((response)=>{
+            const result  = response.data
+            if(Object.keys(result).includes('errors')){
+                alert(result.message)
+            } else{
+                alert(`${result.title} notes  is successfully saved`)
+                dispatch(addNotes(result))
+            }
+        })
+        .catch((err)=>{
+            alert(err.message)
+        })
+    }
+}
+export const addNotes=(data)=>{
+    return {
+        type : "ADD_NOTES" , 
+        payload : data
+    }
+
+}
+
+// get notes action creator 
+
+export const startGetNotse = ()=>{
+    return (dispatch)=>{
+        axios.get('http://dct-user-auth.herokuapp.com/api/notes',{
+            headers : {
+                "x-auth":localStorage.getItem('token')
+            }
+        })
+        .then((response)=>{
+            const result = response.data
+            dispatch(getNotes(result))
+        })
+        .catch((err)=>{
+            console.log('catch error:',err.message)
+        })
+    }
+}
+
+export const getNotes=(notes)=>{
+    return {
+        type : "GET_NOTES" ,
+        payload : notes
+    }
+}

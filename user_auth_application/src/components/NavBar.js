@@ -3,7 +3,7 @@ import {Link , Route, withRouter}  from "react-router-dom"
 import Account from './Account'
 import Home from './Home'
 import Login from './Login'
-import Notes from './Notes'
+import Notes from './notes application /Notes'
 import RegistrationForm from './RegistrationForm'
 import {useDispatch} from "react-redux"
 import {startClearStore} from '../Actions/usersAction'

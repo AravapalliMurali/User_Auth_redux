@@ -11,7 +11,7 @@ export default function userInfoReducers(state = userInfo , action ){
            return userInfo
        }
         default : {
-            return [... state]
+            return [...state]
         }
     }
 }
