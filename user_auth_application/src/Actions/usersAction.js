@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 
 // registration form action creators 
 export function startGetData(formData ,navigate){
@@ -82,7 +83,7 @@ export const startGetAddNotes= (formData) =>{
             if(Object.keys(result).includes('errors')){
                 alert(result.message)
             } else{
-                alert(`${result.title} notes  is successfully saved`)
+                swal(`${result.title} notes  is successfully saved`)
                 dispatch(addNotes(result))
             }
         })
@@ -122,5 +123,53 @@ export const getNotes=(notes)=>{
     return {
         type : "GET_NOTES" ,
         payload : notes
+    }
+}
+
+// remove action creator 
+
+export const startGetRemove =(id)=>{
+    return (dispatch)=>{
+        axios.delete(`http://dct-user-auth.herokuapp.com/api/notes/${id}`,{
+            headers : {
+                "x-auth":localStorage.getItem('token')
+            }
+        })
+        .then((response)=>{
+            const result = response.data
+            swal(`${result.title} notes is successfully removed`)
+            dispatch(remove(id))
+        })
+    }
+}
+
+export const remove=(id)=>{
+    return {
+        type : "REMOVE",
+        payload : id
+    }
+}
+
+// edit action creator 
+
+export const startGetEdit=(id ,formData)=>{
+    return (dispatch)=>{
+        axios.put(`http://dct-user-auth.herokuapp.com/api/notes/${id}`,formData,{
+            headers : {
+                "x-auth":localStorage.getItem('token')
+            }
+        })
+        .then((response)=>{
+            const result = response.data
+            swal(`${result.title} notes is successfully updated`)
+            dispatch(editNotes(result))
+        })
+    }
+}
+
+export const editNotes=(result)=>{
+    return {
+        type : "EDIT" ,
+        payload : result
     }
 }
